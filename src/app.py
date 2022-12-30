@@ -27,16 +27,55 @@ def sitemap():
 
 @app.route('/members', methods=['GET'])
 def handle_hello():
+# this is how you can use the Family datastructure by calling its methods
+    members = jackson_family.get_all_members()#es jacksonfamily en vez de familystructure porque arriba lo cambia
+    if members:
+        response_body = {
+            "hello": "world",
+            "family": members
+        }
+    # status_code 200 si se agregó con éxito, 400 si no lo hace porque el cliente (solicitud) falla, 500 si el servidor encuentra un error
+        return jsonify(response_body), 200
+    else:
+        return jsonify({"msg":"There have been some errors in your request"}),400
 
-    # this is how you can use the Family datastructure by calling its methods
-    members = jackson_family.get_all_members()
-    response_body = {
-        "hello": "world",
-        "family": members
-    }
+
+@app.route('/member/<int:member_id>', methods=['GET', 'DELETE'])
+def get_delete_member(member_id):
+    member = jackson_family.get_member(member_id)#es jacksonfamily en vez de familystructure porque arriba lo cambia
+    if member != "" and member != None and member["id"]>0: 
+        if request.method == 'GET':
+            response_body = {
+                "hello": "world",
+                "your member": member
+            }, 200
+            return jsonify(response_body), 200
+        else:
+            jackson_family.delete_member(id)
+            return jsonify({
+                "done": True
+            }), 200
+    else: 
+        return jsonify({"msg":"There have been some errors in your request"}), 400
 
 
-    return jsonify(response_body), 200
+@app.route('/member', methods=['POST'])
+def add_new_member():
+# https://3000-breathecode-exercisefam-xzrzq0f5ywx.ws-us80.gitpod.io/
+    member = request.get_json()
+    if member["first_name"] !="" and member["age"] !="" and len(member["lucky_numbers"]) > 0:
+        jackson_family.add_member({
+            "id": member["id"] if "id" in member else None,
+            "first_name": member["first_name"],
+            "age": member["age"],
+            "lucky_numbers": member["lucky_numbers"]
+        })
+        return jsonify({
+            "you added a new member ": member
+        }), 200
+    else:
+        return jsonify({"msg":"There have been some errors in your request"}), 400
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
