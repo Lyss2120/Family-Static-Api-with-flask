@@ -21,7 +21,6 @@ class FamilyStructure:
                 "age": 35,
                 "lucky_numbers": [10, 14, 3]
             },
-
             {
                 "id": self._generateId(),
                 "first_name": "John",
@@ -29,7 +28,6 @@ class FamilyStructure:
                 "age": 33,
                 "lucky_numbers": [10, 14, 3]
             },
-
            {
                 "id": self._generateId(),
                 "first_name": "Jimmy",
@@ -58,11 +56,21 @@ class FamilyStructure:
         user_to_delete = list(filter(lambda miembro: miembro["id"]==id, self._members))
         userdelete = self._members.remove(user_to_delete)
         return self._members
+    
+    def update_member(self, id, member):
+        id_to_update = list(filter(lambda m: m["id"]==id, self._members))
+        member_to_update = self._members[id_to_update]
+        member_to_update = member
+        ##filtrar por id y añadir el member para update y append a self._members
+        ## you have to implement this method
+        ## loop the list and replace the member with the given id
+        return self._members
 
     def get_member(self, id):
         # fill this method and update the return
-        user = list(filter(lambda m: m["id"]==id, self._members))
-        return user
+        member = list(filter(lambda m: m["id"]==id, self._members))
+        
+        return member
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):

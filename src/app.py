@@ -26,16 +26,12 @@ def sitemap():
     return generate_sitemap(app)
 
 @app.route('/members', methods=['GET'])
-def handle_hello():
+def get_members():
 # this is how you can use the Family datastructure by calling its methods
-    members = jackson_family.get_all_members()#es jacksonfamily en vez de familystructure porque arriba lo cambia
+    members = jackson_family.get_all_members()
     if members:
-        response_body = {
-            "hello": "world",
-            "family": members
-        }
     # status_code 200 si se agregó con éxito, 400 si no lo hace porque el cliente (solicitud) falla, 500 si el servidor encuentra un error
-        return jsonify(response_body), 200
+        return jsonify(members), 200
     else:
         return jsonify({"msg":"There have been some errors in your request"}),400
 
@@ -46,12 +42,12 @@ def get_delete_member(member_id):
     if member != "" and member != None and member["id"]>0: 
         if request.method == 'GET':
             response_body = {
-                "hello": "world",
-                "your member": member
+                member
             }, 200
+            print(member)
             return jsonify(response_body), 200
         else:
-            jackson_family.delete_member(id)
+            jackson_family.delete_member(member_id)
             return jsonify({
                 "done": True
             }), 200
@@ -70,9 +66,7 @@ def add_new_member():
             "age": member["age"],
             "lucky_numbers": member["lucky_numbers"]
         })
-        return jsonify({
-            "you added a new member ": member
-        }), 200
+        return {}, 200
     else:
         return jsonify({"msg":"There have been some errors in your request"}), 400
 
