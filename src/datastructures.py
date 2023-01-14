@@ -68,8 +68,8 @@ class FamilyStructure:
 
     def get_member(self, id):
         # fill this method and update the return
-        member = list(filter(lambda m: m["id"]==id, self._members))
-        
+        member_list = list(filter(lambda m: m["id"]==id, self._members))
+        member = member_list[0]
         return member
 
     # this method is done, it returns a list with all the family members

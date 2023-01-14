@@ -39,20 +39,13 @@ def get_members():
 @app.route('/member/<int:member_id>', methods=['GET', 'DELETE'])
 def get_delete_member(member_id):
     member = jackson_family.get_member(member_id)#es jacksonfamily en vez de familystructure porque arriba lo cambia
-    if member != "" and member != None and member["id"]>0: 
-        if request.method == 'GET':
-            response_body = {
-                member
-            }, 200
-            print(member)
-            return jsonify(response_body), 200
-        else:
+    if request.method == 'GET':
+            return jsonify(member), 200
+    else:
             jackson_family.delete_member(member_id)
             return jsonify({
                 "done": True
             }), 200
-    else: 
-        return jsonify({"msg":"There have been some errors in your request"}), 400
 
 
 @app.route('/member', methods=['POST'])
