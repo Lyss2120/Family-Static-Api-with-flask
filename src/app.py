@@ -38,15 +38,11 @@ def get_members():
 
 @app.route('/member/<int:member_id>', methods=['GET', 'DELETE'])
 def get_delete_member(member_id):
-    member = jackson_family.get_member(member_id)#es jacksonfamily en vez de familystructure porque arriba lo cambia
+    member = jackson_family.get_member(member_id)
     if request.method == 'GET':
             return jsonify(member), 200
     else:
-            jackson_family.delete_member(member_id)
-            return jsonify({
-                "done": True
-            }), 200
-
+       return jackson_family.delete_member(member_id)
 
 @app.route('/member', methods=['POST'])
 def add_new_member():

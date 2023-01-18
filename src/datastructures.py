@@ -7,7 +7,7 @@ update this file to implement the following already declared methods:
 - get_member: Should return a member from the self._members list
 """
 from random import randint
-
+from flask import jsonify
 
 class FamilyStructure:
     def __init__(self, last_name):
@@ -53,9 +53,14 @@ class FamilyStructure:
 
     def delete_member(self, id):
         # fill this method and update the return
-        user_to_delete = list(filter(lambda miembro: miembro["id"]==id, self._members))
-        userdelete = self._members.remove(user_to_delete)
-        return self._members
+        delete_member = list(filter(lambda member: member["id"]==id, self._members))
+        print(delete_member)
+        print(id)
+        index = delete_member[0]
+        #accede al primer elemento porque viene dentro de una list
+        member_deleted = self._members.remove(index)
+        # print(delete_member)
+        return jsonify(self._members)
     
     def update_member(self, id, member):
         id_to_update = list(filter(lambda m: m["id"]==id, self._members))
