@@ -60,7 +60,8 @@ class FamilyStructure:
         #accede al primer elemento porque viene dentro de una list
         member_deleted = self._members.remove(index)
         # print(delete_member)
-        return jsonify(self._members)
+        res = {'done': True}
+        return res
     
     def update_member(self, id, member):
         id_to_update = list(filter(lambda m: m["id"]==id, self._members))

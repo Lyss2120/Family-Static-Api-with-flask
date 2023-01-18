@@ -42,8 +42,9 @@ def get_delete_member(member_id):
     if request.method == 'GET':
             return jsonify(member), 200
     else:
-       return jackson_family.delete_member(member_id)
-
+        jackson_family.delete_member(member_id)
+        return jsonify({'done': True}), 200
+#delete m-id retorna un dict con {done:true}
 @app.route('/member', methods=['POST'])
 def add_new_member():
 # https://3000-breathecode-exercisefam-xzrzq0f5ywx.ws-us80.gitpod.io/
